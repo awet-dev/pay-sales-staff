@@ -33,6 +33,11 @@ class Bonus
      */
     private $addAt;
 
+    public function __construct()
+    {
+        $this->setAddAt(new \DateTimeImmutable());
+    }
+
     public function getId(): ?int
     {
         return $this->id;

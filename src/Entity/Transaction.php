@@ -49,6 +49,12 @@ class Transaction
      */
     private $product;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Bonus::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $bonus;
+
     public function __construct()
     {
         $this->setPurchaseAt(new \DateTimeImmutable());
@@ -127,6 +133,18 @@ class Transaction
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getBonus(): ?Bonus
+    {
+        return $this->bonus;
+    }
+
+    public function setBonus(Bonus $bonus): self
+    {
+        $this->bonus = $bonus;
 
         return $this;
     }
