@@ -12,7 +12,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Dto\AssetsDto;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,6 +36,21 @@ class DashboardController extends AbstractDashboardController
         // you can also render some template to display a proper Dashboard
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         //return $this->render('some/path/my-dashboard.html.twig');
+    }
+
+    #[Route('/pay/salary/{type}', name: 'paySalary')]
+    public function paySalary($type): Response
+    {
+        $salary = new Salary();
+        $salary->setAmount("1000");
+        $salary->setUser($this->getUser());
+        $salary->setType($type);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($salary);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin');
     }
 
     public function configureMenuItems(): iterable
@@ -91,7 +105,7 @@ class DashboardController extends AbstractDashboardController
     public function configureAssets(): Assets
     {
         return Assets::new()
-            ->addWebpackEncoreEntry('app')
-            ->addJsFile('build/app.js');
+            ->addWebpackEncoreEntry('salary')
+            ->addJsFile('build/salary.js');
     }
 }

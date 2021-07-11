@@ -11,5 +11,5 @@ import './styles/app.css';
 // start the Stimulus application
 import './bootstrap';
 
-
-console.log("Welcome to the js in backend")
+// import the salary manipulation file
+import './js/salary'

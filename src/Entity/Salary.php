@@ -38,6 +38,12 @@ class Salary
      */
     private $type;
 
+    public function __construct()
+    {
+        $this->setPaidAt(new \DateTimeImmutable());
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
