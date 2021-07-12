@@ -1,34 +1,42 @@
-let today = new Date().getTime();
-let lastDay = lastWorkingDayOfMonth(1).getTime();
-let interval = lastDay - today;
-
-// run http request for the salary payment controller
-function salaryPaymentRequest() {
+// Run http request for the salary payment controller
+function salaryPaymentRequest(type) {
     const Http = new XMLHttpRequest();
-    const url='/pay/salary/salary';
+    const url="/pay/salary/" + type;
     Http.open("GET", url, true);
     Http.send(null);
 
-    interval = lastWorkingDayOfMonth(2).getTime() - new Date().getTime();
+    clearTimeout()
 
-    clearTimeout();
-    setTimeout(salaryPaymentRequest, interval)
+    // setTimeout(salaryPaymentRequest, intervalToLastWorkingDayOfMonth(1),'Salary')
+    // setTimeout(salaryPaymentRequest, intervalToWorkingDayHalfOfMonth(1),'Bonus')
 }
 
 
-function lastWorkingDayOfMonth(month) {
+// Time interval to the last working day of the month
 
+function intervalToLastWorkingDayOfMonth(month) {
     let today = new Date();
-    // get the last day of the month
-    let lastDayOfMonth =  new Date(today.getFullYear(), today.getMonth()+month, -0);
-
-    // check if it is weekends, if yes change the payment day to the friday before weekends
-    if (lastDayOfMonth.getDay() === 6 ) {
-        return new Date(today.getFullYear(), today.getMonth()+month, -1);
-    } else if (lastDayOfMonth.getDay() === 7) {
-        return new Date(today.getFullYear(), today.getMonth()+month, -2);
+    let lastDay = new Date(today.getFullYear(), today.getMonth() + month, 0, 9, 0, 0, 0);
+    if (lastDay.getDay() === 6) {
+        lastDay.setDate(lastDay.getDate() - 1)
+    } else if(lastDay.getDay() === 0) {
+        lastDay.setDate(lastDay.getDate() - 2)
     }
-    return lastDayOfMonth;
+    return lastDay.getTime() - today.getTime()
 }
 
-setTimeout(salaryPaymentRequest, interval);
+// Time interval to the working day half of the month
+
+function intervalToWorkingDayHalfOfMonth(month) {
+    let today = new Date();
+    let halfOfMonth = new Date(today.getFullYear(), today.getMonth()+month, 15, 9, 0, 0, 0);
+    if (halfOfMonth.getDay() === 6) {
+        halfOfMonth.setDate(halfOfMonth.getDate() + 4,)
+    } else if(halfOfMonth.getDay() === 0) {
+        halfOfMonth.setDate(halfOfMonth.getDate() + 3)
+    }
+    return halfOfMonth.getTime() - today.getTime()
+}
+
+// setTimeout(salaryPaymentRequest, intervalToLastWorkingDayOfMonth(1),'Salary')
+// setTimeout(salaryPaymentRequest, intervalToWorkingDayHalfOfMonth(0),'Bonus')

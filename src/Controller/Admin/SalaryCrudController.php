@@ -4,6 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\Salary;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 
 class SalaryCrudController extends AbstractCrudController
 {
@@ -12,14 +16,18 @@ class SalaryCrudController extends AbstractCrudController
         return Salary::class;
     }
 
-    /*
+
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            DateTimeField::new('paidAt')->hideOnForm(),
+            MoneyField::new('amount')->setCurrency('EUR'),
+            AssociationField::new('user'),
+            ChoiceField::new('type')->setChoices([
+                'Salary' => 'Salary',
+                'Bonus' => 'Bonus'
+            ])
         ];
     }
-    */
+
 }

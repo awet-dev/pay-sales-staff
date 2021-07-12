@@ -8,6 +8,8 @@ use App\Entity\Product;
 use App\Entity\Salary;
 use App\Entity\Transaction;
 use App\Entity\User;
+use App\Repository\BonusRepository;
+use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -39,17 +41,29 @@ class DashboardController extends AbstractDashboardController
     }
 
     #[Route('/pay/salary/{type}', name: 'paySalary')]
-    public function paySalary($type): Response
+    public function paySalary($type, UserRepository $userRepository): Response
     {
-        $salary = new Salary();
-        $salary->setAmount("1000");
-        $salary->setUser($this->getUser());
-        $salary->setType($type);
+        $users = $userRepository->findAll();
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($salary);
-        $entityManager->flush();
+        foreach ($users as $user) {
+            $salary = new Salary();
+            if ($type == 'Salary') {
+                $salary->setAmount("100000");
+            } else {
+                $bonuses = $user->getBonuses();
+                $totalBonus = 0;
+                foreach ($bonuses as $bonus) {
+                    $totalBonus += $bonus->getAmount();
+                }
+                $salary->setAmount($totalBonus);
+            }
+            $salary->setUser($user);
+            $salary->setType($type);
 
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($salary);
+            $entityManager->flush();
+        }
         return $this->redirectToRoute('admin');
     }
 
