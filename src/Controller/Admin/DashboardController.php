@@ -64,7 +64,7 @@ class DashboardController extends AbstractDashboardController
             $entityManager->persist($salary);
             $entityManager->flush();
         }
-        return $this->json($users);
+        return $this->redirectToRoute('admin');
     }
 
     public function configureMenuItems(): iterable
