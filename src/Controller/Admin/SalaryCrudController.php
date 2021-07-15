@@ -24,8 +24,8 @@ class SalaryCrudController extends AbstractCrudController
             MoneyField::new('amount')->setCurrency('EUR'),
             AssociationField::new('user'),
             ChoiceField::new('type')->setChoices([
-                'Salary' => 'Salary',
-                'Bonus' => 'Bonus'
+                'Salary' => 'salary',
+                'Bonus' => 'bonus'
             ])
         ];
     }

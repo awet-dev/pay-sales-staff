@@ -40,14 +40,14 @@ class DashboardController extends AbstractDashboardController
         //return $this->render('some/path/my-dashboard.html.twig');
     }
 
-    #[Route('/pay/salary/{type}', name: 'paySalary')]
-    public function paySalary($type, UserRepository $userRepository): Response
+    #[Route('/payment/request/{type}', name: 'payment_request')]
+    public function paymentRequest($type, UserRepository $userRepository): Response
     {
         $users = $userRepository->findAll();
 
         foreach ($users as $user) {
             $salary = new Salary();
-            if ($type == 'Salary') {
+            if ($type === 'salary') {
                 $salary->setAmount("100000");
             } else {
                 $bonuses = $user->getBonuses();
@@ -64,7 +64,7 @@ class DashboardController extends AbstractDashboardController
             $entityManager->persist($salary);
             $entityManager->flush();
         }
-        return $this->redirectToRoute('admin');
+        return $this->json($users);
     }
 
     public function configureMenuItems(): iterable
