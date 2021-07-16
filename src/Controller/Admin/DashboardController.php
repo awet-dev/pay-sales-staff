@@ -17,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -50,12 +51,7 @@ class DashboardController extends AbstractDashboardController
             if ($type === 'salary') {
                 $salary->setAmount("100000");
             } else {
-                $bonuses = $user->getBonuses();
-                $totalBonus = 0;
-                foreach ($bonuses as $bonus) {
-                    $totalBonus += $bonus->getAmount();
-                }
-                $salary->setAmount($totalBonus);
+                $this->addMonthlyBonus($salary, $user);
             }
             $salary->setUser($user);
             $salary->setType($type);
@@ -114,6 +110,20 @@ class DashboardController extends AbstractDashboardController
             // need to generate relative URLs instead, call this method
             ->generateRelativeUrls()
             ;
+    }
+
+
+    public function addMonthlyBonus($salary, $user) {
+        $bonuses = $user->getBonuses();
+        $totalBonus = 0;
+        foreach ($bonuses as $bonus) {
+            $dateTime = new \DateTime();
+
+            if ($bonus->getAddAt()->format('n') + 1 == $dateTime->format('n')) {
+                $totalBonus += $bonus->getAmount();
+            };
+        }
+        $salary->setAmount($totalBonus);
     }
 
 }
