@@ -3,16 +3,35 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.full_name) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+   <div class="container">
+       <h3 class="text-center text-capitalize mt-5">Register Supplier</h3>
+       {{ form_start(registrationForm, { 'attr': {'class': 'row g-3 needs-validation form-size mx-auto my-3 p-4 rounded shadow align-content-center bg-light'}}) }}
+           <div class="col-md-12">
+               {{ form_widget(registrationForm.full_name, {'attr': {'class': 'form-control', 'id': 'validationCustom01', 'placeholder': 'Full Name'}}) }}
+           </div>
+           <div class="col-md-12">
+               <div class="input-group has-validation">
+                   <span class="input-group-text" id="inputGroupPrepend">@</span>
+                   {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'id': 'validationCustomUsername', 'placeholder': 'Email'}}) }}
+               </div>
+           </div>
+           <div class="col-md-12">
+               {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'id': 'validationCustom02', 'placeholder': '*************'}}) }}
+           </div>
+           <div class="col-12">
+               <div class="form-check">
+                   {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'invalidCheck'}}) }}
+                   <label class="form-check-label" for="invalidCheck">
+                       Agree to terms and conditions
+                   </label>
+               </div>
+           </div>
+           <div class="col-12">
+               <button class="btn btn-primary form-control" type="submit">Register</button>
+           </div>
+       {{ form_end(registrationForm) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+   </div>
+
 {% endblock %}

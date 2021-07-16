@@ -126,4 +126,9 @@ class DashboardController extends AbstractDashboardController
         $salary->setAmount($totalBonus);
     }
 
+    public function configureAssets(): Assets
+    {
+        return Assets::new()->addWebpackEncoreEntry('cronJob');
+    }
+
 }

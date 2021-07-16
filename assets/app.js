@@ -12,4 +12,4 @@ import './styles/app.css';
 import './bootstrap';
 
 // import the payment script
-import './CronScript/cornJob'
+import './CronScript/cronJob'
