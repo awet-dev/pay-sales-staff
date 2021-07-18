@@ -19,7 +19,7 @@
            <div class="col-md-12">
                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'id': 'validationCustom02', 'placeholder': '*************'}}) }}
            </div>
-           <div class="col-12">
+           <div class="col-6">
                <div class="form-check">
                    {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'invalidCheck'}}) }}
                    <label class="form-check-label" for="invalidCheck">
@@ -27,6 +27,10 @@
                    </label>
                </div>
            </div>
+            <div class="col-6">
+                I already have an account,
+                <a class="text-decoration-none text-info fw-bold" href="{{ path('app_login') }}">Log In</a>
+            </div>
            <div class="col-12">
                <button class="btn btn-primary form-control" type="submit">Register</button>
            </div>
