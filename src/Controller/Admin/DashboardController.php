@@ -10,14 +10,18 @@ use App\Entity\Transaction;
 use App\Entity\User;
 use App\Repository\BonusRepository;
 use App\Repository\UserRepository;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Sonata\Exporter\Exporter;
+use Sonata\Exporter\Source\ArraySourceIterator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Date;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -72,6 +76,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Transaction', 'fas fa-shopping-cart', Transaction::class);
         yield MenuItem::linkToCrud('Bonus', 'fas fa-comment-dollar', Bonus::class);
         yield MenuItem::linkToCrud('Salary', 'fas fa-money-check-alt', Salary::class);
+        yield MenuItem::linkToUrl('Export Bonus', 'fas fa-download', $this->generateUrl('bonus_export'));
     }
 
     public function configureDashboard(): Dashboard
@@ -129,6 +134,23 @@ class DashboardController extends AbstractDashboardController
     public function configureAssets(): Assets
     {
         return Assets::new()->addWebpackEncoreEntry('cronJob');
+    }
+
+    #[Route("/bonus/export", name:"bonus_export")]
+    public function __invoke(BonusRepository $bonusRepository, Exporter $exporter): Response
+    {
+        $bonuses = $bonusRepository->findBy(['user' => $this->getUser()]);
+        $data = array();
+
+        foreach ($bonuses as $bonus) {
+            $data[] = ['Full Name' => $bonus->getUser()->getFullName(), 'Amount' => $bonus->getAmount()/100 . " €", 'Month' => $bonus->getAddAt()->format('M')];
+        }
+
+        return $exporter->getResponse(
+            'csv',
+            'bonus_12'.'csv',
+            new ArraySourceIterator($data)
+        );
     }
 
 }
