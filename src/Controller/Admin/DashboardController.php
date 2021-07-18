@@ -9,6 +9,7 @@ use App\Entity\Salary;
 use App\Entity\Transaction;
 use App\Entity\User;
 use App\Repository\BonusRepository;
+use App\Repository\SalaryRepository;
 use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -77,6 +78,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Bonus', 'fas fa-comment-dollar', Bonus::class);
         yield MenuItem::linkToCrud('Salary', 'fas fa-money-check-alt', Salary::class);
         yield MenuItem::linkToUrl('Export Bonus', 'fas fa-download', $this->generateUrl('bonus_export'));
+        yield MenuItem::linkToUrl('Export Salary', 'fas fa-download', $this->generateUrl('salary_export'));
     }
 
     public function configureDashboard(): Dashboard
@@ -137,20 +139,30 @@ class DashboardController extends AbstractDashboardController
     }
 
     #[Route("/bonus/export", name:"bonus_export")]
-    public function __invoke(BonusRepository $bonusRepository, Exporter $exporter): Response
+    public function bonusExport(BonusRepository $bonusRepository, Exporter $exporter): Response
     {
-        $bonuses = $bonusRepository->findBy(['user' => $this->getUser()]);
+        return $this->export('bonus', $bonusRepository, $exporter);
+    }
+
+    #[Route("/salary/export", name:"salary_export")]
+    public function SalaryExport(SalaryRepository $salaryRepository, Exporter $exporter): Response
+    {
+        return $this->export('salary', $salaryRepository, $exporter);
+    }
+
+    public function export($fileName, $paymentRepository, $exporter)
+    {
+        $payments = $paymentRepository->findBy(['user' => $this->getUser()]);
         $data = array();
 
-        foreach ($bonuses as $bonus) {
-            $data[] = ['Full Name' => $bonus->getUser()->getFullName(), 'Amount' => $bonus->getAmount()/100 . " €", 'Month' => $bonus->getAddAt()->format('M')];
+        foreach ($payments as $payment) {
+            $data[] = ['Full Name' => $payment->getUser()->getFullName(), 'Amount' => $payment->getAmount()/100 . " €", 'Month' => $payment->getAddAt()->format('M')];
         }
 
         return $exporter->getResponse(
             'csv',
-            'bonus_12'.'csv',
+            $fileName.'.csv',
             new ArraySourceIterator($data)
         );
     }
-
 }
