@@ -9,24 +9,10 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/login", name="app_login")
-     */
+
+    #[Route("/login", name:"app_login")]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        /*
-        if ($this->getUser()) {
-            return $this->redirectToRoute('target_path');
-        }
-
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-        */
-
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -46,7 +32,7 @@ class SecurityController extends AbstractController
             // the title visible above the login form (define this option only if you are
             // rendering the login template in a regular Symfony controller; when rendering
             // it from an EasyAdmin Dashboard this is automatically set as the Dashboard title)
-            'page_title' => 'Supplier login',
+            'page_title' => 'ACME login',
 
             // the string used to generate the CSRF token. If you don't define
             // this parameter, the login form won't include a CSRF token
@@ -59,10 +45,10 @@ class SecurityController extends AbstractController
             'username_label' => 'Your Email',
 
             // the label displayed for the password form field (the |trans filter is applied to it)
-            'password_label' => 'Your password',
+            'password_label' => 'Your Password',
 
-            // the label displayed for the Sign In form button (the |trans filter is applied to it)
-            'sign_in_label' => 'Log in',
+            // the label displayed for the Sign-In form button (the |trans filter is applied to it)
+            'sign_in_label' => 'Sign-In',
 
             // the 'name' HTML attribute of the <input> used for the username field (default: '_username')
             'username_parameter' => 'email',
@@ -72,9 +58,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/logout", name="app_logout")
-     */
+    #[Route("/logout", name:"app_logout")]
     public function logout()
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
