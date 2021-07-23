@@ -1,7 +1,13 @@
 # Pay Sales Staff
 
-### To start the project 
-- Just run `composer install` because all the other script are added to the composer.json file on the scripts object
+### To start the project run
+- `composer install` to install composer dependency
+- `yarn install` to install javascript dependence
+- `bin/console d:d:create` to create database
+- `bin/console d:s:u --force` to persist the entity to the database
+- `symfony serve -d` to start the local server
+- `yarn watch` to build javascript asset
+- Click the link and [home](https://127.0.0.1:8000)
 
 ### Register and Sing In 
 - Register by clicking this [register](https://127.0.0.1:8000/)

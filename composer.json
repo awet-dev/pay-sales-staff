@@ -85,12 +85,7 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts",
-            "symfony serve -d",
-            "yarn install",
-            "bin/console d:d:create",
-            "bin/console d:s:u --force",
-            "yarn watch"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
