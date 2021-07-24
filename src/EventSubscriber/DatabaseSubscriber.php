@@ -3,9 +3,11 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Bonus;
+use App\Entity\Supplier;
 use App\Entity\Transaction;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Security;
@@ -53,7 +55,9 @@ class DatabaseSubscriber implements EventSubscriberInterface
     {
         return [
             BeforeEntityPersistedEvent::class => [
-                ['onTransaction', 1], ['onUser', 2]
+                ['onTransaction', 1],
+                ['onUser', 2],
+                ['setUserRole', 3]
             ],
         ];
     }
@@ -63,6 +67,16 @@ class DatabaseSubscriber implements EventSubscriberInterface
         $entity = $event->getEntityInstance();
         if ($entity instanceof User) {
             $entity->setPassword($this->userPasswordHasher->hashPassword($entity, $entity->getPassword()));
+        }
+    }
+
+    public function setUserRole(BeforeEntityPersistedEvent $event)
+    {
+        $entity = $event->getEntityInstance();
+        if ($entity instanceof Supplier) {
+            $roles = $entity->getUser()->getRoles();
+            array_push($roles, $entity->getUserRole());
+            $entity->getUser()->setRoles($roles);
         }
     }
 }
