@@ -3,12 +3,20 @@
     "app": {
       "js": [
         "/build/runtime.96aa4ea2.js",
-        "/build/651.aa17c6b2.js",
-        "/build/app.0382ebdd.js"
+        "/build/731.0e624f76.js",
+        "/build/543.9488f3c7.js",
+        "/build/app.48406f48.js"
       ],
       "css": [
-        "/build/651.4ae1eb5c.css",
+        "/build/543.4ae1eb5c.css",
         "/build/app.1dfb2df5.css"
+      ]
+    },
+    "cronJob": {
+      "js": [
+        "/build/runtime.96aa4ea2.js",
+        "/build/731.0e624f76.js",
+        "/build/cronJob.616d5412.js"
       ]
     }
   }
