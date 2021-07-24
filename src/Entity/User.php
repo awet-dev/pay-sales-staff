@@ -70,6 +70,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->transactions = new ArrayCollection();
         $this->bonuses = new ArrayCollection();
         $this->salaries = new ArrayCollection();
+        $this->setRoles(['ROLE_ADMIN']);
     }
 
     public function getId(): ?int

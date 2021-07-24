@@ -52,7 +52,7 @@ class Supplier
     public function setUser(User $user): self
     {
         $this->user = $user;
-        $this->user->setRoles($this->user_role);
+        $this->user->setRoles([$this->user_role]);
 
         return $this;
     }
