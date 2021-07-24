@@ -31,7 +31,13 @@ class Supplier
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $bann_account;
+    private $bank_account;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $user_role;
+
 
     public function getId(): ?int
     {
@@ -46,6 +52,7 @@ class Supplier
     public function setUser(User $user): self
     {
         $this->user = $user;
+        $this->user->setRoles($this->user_role);
 
         return $this;
     }
@@ -62,15 +69,28 @@ class Supplier
         return $this;
     }
 
-    public function getBannAccount(): ?string
+    public function getBankAccount(): ?string
     {
-        return $this->bann_account;
+        return $this->bank_account;
     }
 
-    public function setBannAccount(string $bann_account): self
+    public function setBankAccount(string $bank_account): self
     {
-        $this->bann_account = $bann_account;
+        $this->bank_account = $bank_account;
 
         return $this;
     }
+
+    public function getUserRole(): ?string
+    {
+        return $this->user_role;
+    }
+
+    public function setUserRole(string $user_role): self
+    {
+        $this->user_role = $user_role;
+
+        return $this;
+    }
+
 }
