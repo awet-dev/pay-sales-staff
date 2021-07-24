@@ -87,8 +87,6 @@
         },
         "post-install-cmd": [
             "@auto-scripts",
-            "bin/console doctrine:database:drop",
-            "bin/console doctrine:database:create",
             "bin/console d:s:u --force"
         ],
         "post-update-cmd": [
