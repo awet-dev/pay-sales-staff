@@ -135,7 +135,7 @@ class DashboardController extends AbstractDashboardController
 
     public function configureAssets(): Assets
     {
-        return Assets::new()->addJsFile('build/cronJob.js');
+        return Assets::new()->addWebpackEncoreEntry('cronJob');
     }
 
     #[Route("/bonus/export", name:"bonus_export")]
