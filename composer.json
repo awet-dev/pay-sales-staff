@@ -87,7 +87,7 @@
         },
         "post-install-cmd": [
             "@auto-scripts",
-            "bin/console d:d:create"
+            "bin/console d:s:u --force"
         ],
         "post-update-cmd": [
             "@auto-scripts"
