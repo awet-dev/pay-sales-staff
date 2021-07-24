@@ -6,6 +6,7 @@ use App\Entity\Bonus;
 use App\Entity\Customer;
 use App\Entity\Product;
 use App\Entity\Salary;
+use App\Entity\Supplier;
 use App\Entity\Transaction;
 use App\Entity\User;
 use App\Repository\BonusRepository;
@@ -70,8 +71,8 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Supplier', 'fas fa-people-carry', User::class);
+        yield MenuItem::linktoDashboard('Supplier', 'fas fa-people-carry');
+        yield MenuItem::linkToCrud('Supplier', 'fas fa-people-carry', Supplier::class);
         yield MenuItem::linkToCrud('Customer', 'fas fa-users', Customer::class);
         yield MenuItem::linkToCrud('Product', 'fas fa-truck-loading', Product::class);
         yield MenuItem::linkToCrud('Transaction', 'fas fa-shopping-cart', Transaction::class);
