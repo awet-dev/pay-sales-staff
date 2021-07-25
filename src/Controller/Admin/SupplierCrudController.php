@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Supplier;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -27,5 +29,13 @@ class SupplierCrudController extends AbstractCrudController
                 'ROLE_SUPPLIER' => 'ROLE_SUPPLIER'
             ])
         ];
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->setPermission('new', 'ROLE_ADMIN')
+            ->setPermission('delete', 'ROLE_ADMIN')
+            ->setPermission('edit', 'ROLE_ADMIN');
     }
 }
