@@ -2,21 +2,21 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/build/runtime.96aa4ea2.js",
-        "/build/731.0e624f76.js",
-        "/build/543.9488f3c7.js",
-        "/build/app.48406f48.js"
+        "/build/runtime.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_for-each_js-node_modules_core-js_modules_es_dat-282c20.js",
+        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-3d222b.js",
+        "/build/app.js"
       ],
       "css": [
-        "/build/543.4ae1eb5c.css",
-        "/build/app.1dfb2df5.css"
+        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-3d222b.css",
+        "/build/app.css"
       ]
     },
     "cronJob": {
       "js": [
-        "/build/runtime.96aa4ea2.js",
-        "/build/731.0e624f76.js",
-        "/build/cronJob.616d5412.js"
+        "/build/runtime.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_for-each_js-node_modules_core-js_modules_es_dat-282c20.js",
+        "/build/cronJob.js"
       ]
     }
   }
